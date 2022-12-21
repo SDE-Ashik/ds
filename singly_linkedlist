@@ -1,0 +1,478 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node
+{
+    int data;
+    struct node *next;
+};
+struct node *newnode, *temp, *head = 0;
+int count = 0;
+
+// insertion front
+void insertion_front()
+{
+    printf("\nenter the data:");
+    newnode = (struct node *)malloc(sizeof(struct node));
+    count++;
+    scanf("%d", &newnode->data);
+    newnode->next = 0;
+    if (head == 0)
+    {
+        head = newnode;
+    }
+    else
+    {
+        temp = head;
+        newnode->next = head;
+        head = newnode;
+    }
+}
+
+//  insertion  before any specifici position
+void insertionbefore_pos()
+{
+    int pos;
+    printf("\nenter a position:");
+    scanf("%d", &pos);
+    if (pos > count)
+    {
+        printf("\nnot possible\n");
+    }
+
+    else
+    {
+
+        count++;
+        int i = 1;
+        struct node *ptr;
+        printf("\nenter the data:");
+        newnode = (struct node *)malloc(sizeof(struct node));
+        scanf("%d", &newnode->data);
+        temp = ptr = head;
+        if (i == 1 && pos == 1)
+        {
+            newnode->next = head;
+            head = newnode;
+        }
+        else
+        {
+            while (i < pos)
+            {
+                ptr = temp;
+                temp = temp->next;
+                i++;
+            }
+            newnode->next = temp;
+            ptr->next = newnode;
+        }
+    }
+}
+
+// insertion after a specific position
+void insertionafter_pos()
+{
+    int pos;
+    printf("\nenter a position:");
+    scanf("%d", &pos);
+    if (pos > count)
+    {
+        printf("\n insertion not possible\n");
+    }
+    else
+    {
+        count++;
+        int i = 1;
+        struct node *ptr;
+        printf("\nenter the data:");
+        newnode = (struct node *)malloc(sizeof(struct node));
+        scanf("%d", &newnode->data);
+        temp = ptr = head;
+
+        while (i < pos)
+        {
+            ptr = temp;
+            temp = temp->next;
+            i++;
+        }
+
+        newnode->next = temp->next;
+        temp->next = newnode;
+    }
+}
+
+// insertion before  specific  value
+void insertionbefore_value()
+{
+    int key, i = 1;
+    struct node *ptr = NULL;
+    temp = head;
+    int flag=0;
+
+    if (head != 0)
+    {
+        printf("\nenter the value for searching:");
+        scanf("%d", &key);
+        while (temp != 0 && temp->data != key && i<=count )
+        {
+            ptr=temp;
+            temp = temp->next;
+            // flag=1;
+
+            i++;
+        }
+        
+        
+
+        if (temp->data == key)
+        { 
+            // flag=0;
+            printf("\n enter the data:");
+            count++;
+            newnode = (struct node *)malloc(sizeof(struct node));
+            scanf("%d", &newnode->data);
+            newnode->next = 0;
+            if (i == 1)
+            {
+                newnode->next = head;
+                head = newnode;
+                return;
+            }
+           
+            
+            else
+            {
+                int j = 1;
+                temp = head;
+                while (j < i)
+                {
+                    ptr = temp;
+                    temp = temp->next;
+                    j++;
+                }
+                newnode->next = temp;
+                ptr->next = newnode;
+                return;
+            }
+        }
+        if(temp->data!=key)
+        {
+            printf("\n value not found in linked list\n");
+        }
+    }
+    else
+    {
+        if (head == 0)
+        
+            printf("\n empty linked list\n");
+        
+    }
+}
+
+// insertion after a specific value
+
+void insertionafter_value()
+{
+    int key;
+    temp = head;
+
+    if (count == 0)
+    {
+        printf("\n empty linked list\n");
+    }
+    else
+    {
+        printf("\n enter a value for searching .\n");
+        scanf("%d", &key);
+        while (temp != 0 && temp->data != key)
+        {
+            temp = temp->next;
+        }
+        if (temp != 0 && temp->data == key)
+        {
+            printf("\n enter the data:");
+            count++;
+            newnode = (struct node *)malloc(sizeof(struct node));
+            scanf("%d", &newnode->data);
+            newnode->next = temp->next;
+            temp->next = newnode;
+        }
+        else
+        {
+            printf("\n not found\n");
+        }
+    }
+}
+
+// insertion at end
+void insertion_end()
+{
+    printf("\nenter the data:");
+    newnode = (struct node *)malloc(sizeof(struct node));
+    scanf("%d", &newnode->data);
+    newnode->next = 0;
+    count++;
+    if (head == 0)
+    {
+        head = newnode;
+    }
+    else
+    {
+        temp = head;
+        while (temp->next != 0)
+        {
+            temp = temp->next;
+        }
+        temp->next = newnode;
+    }
+}
+
+// display
+void display()
+{
+    if (head == 0)
+    {
+        printf("\nno data found \n");
+    }
+    else
+    {
+        temp = head;
+        printf("total number of data stored in linked list = %d \n", count);
+        printf("datas in linkedlist are \n");
+        while (temp != 0)
+        {
+            printf("%d-->", temp->data);
+            temp = temp->next;
+        }
+    }
+}
+// deletion at front
+
+void delete_front()
+{
+    if (head == 0)
+    {
+        printf("\nno data found for deletion\n");
+    }
+    else
+    {
+        count--;
+        temp = head;
+        head = temp->next;
+        printf("\ndeleted data is %d", temp->data);
+        free(temp);
+    }
+}
+// deletion at particular position
+
+void deletion_pos()
+{
+    int i = 1, key;
+    struct node *ptr;
+    temp = head;
+    if (head == NULL)
+    {
+        printf("\n linked list is empty\n");
+        return;
+    }
+
+    printf("\nenter a position for deletion: ");
+    scanf("%d", &key);
+    if (key == 1)
+    {
+        temp = head;
+        head = temp->next;
+        printf("\n deleted data is %d", temp->data);
+        free(temp);
+        count--;
+        return;
+    }
+    for (i = 1; i < key && temp != NULL; i++)
+    {
+        ptr = temp;
+        temp = temp->next;
+    }
+    if (temp == NULL)
+    {
+        printf("\n invalid position");
+        return;
+    }
+    ptr->next = temp->next;
+    printf("Deleted element is %d\n", temp->data);
+    free(temp);
+    count--;
+}
+
+// deletion at particular value
+
+void deletion_key()
+{
+    int i = 0, key;
+    struct node *ptr;
+    temp = ptr = head;
+    if (head != 0)
+    {
+        printf("\nenter any data to search :");
+        scanf("%d", &key);
+        while (key != temp->data && temp != 0 && i<count)
+        {
+            ptr = temp;
+            temp = temp->next;
+            i++;
+        }
+        // printf("%d %d",i,count);
+        if (i == 0)
+        {
+            count--;
+            head = temp->next;
+            printf("\n%d is deleted element\n", temp->data);
+            free(temp);
+        }
+        else if (i == count-1)
+        {
+            printf("\ndata not found in this linked list\n");
+        }
+        else
+        {
+            count--;
+            ptr->next = temp->next;
+            printf("\n%d is deleted element\n", temp->data);
+            free(temp);
+        }
+    }
+    else
+    {
+        printf("\n linked list is empty\n");
+    }
+}
+// deletion at last
+void deletion_last()
+{
+    if (head == 0)
+    {
+        printf("\n no data available\n ,");
+    }
+    else
+    {
+        struct node *ptr;
+        temp = ptr = head;
+        count--;
+        while (temp->next != 0)
+        {
+            ptr = temp;
+            temp = temp->next;
+        }
+        ptr->next = 0;
+        printf("\n%d is deleted element\n", temp->data);
+        free(temp);
+    }
+}
+int main()
+{
+    int choice;
+    printf("\n \t\t\t ** singly linked list**\n");
+    do
+    {
+
+        printf("operations performed in singly linked list are given below \n");
+        printf("\n\t\t\t1.INSERTION\n\t\t\t2.DELETION\n\t\t\t3.COUNT\n\t\t\t4.DISPLAY\n\t\t\t5.EXIT\n");
+        printf("\n enter your choice:");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+            int ch, back;
+        case 1:
+
+            do
+            {
+                printf("\n different types of insertion opertions are:");
+                printf("\n\t\t\t1.INSERTION AT FRONT\n\t\t\t2.INSERTION BEFORE A SPECIFIC POSITION\n\t\t\t3.INSERTION AFTER A SPECIFIC POSITION\n\t\t\t4.INSERTION BEFORE A SPECIFIC VALUE\n\t\t\t5.INSERTION AFTER A SPECIFIC VALUE\n\t\t\t6.INSERTION AT END\n");
+                printf("\n select any insertion operation:");
+                scanf("%d", &ch);
+                switch (ch)
+                {
+                case 1:
+                    insertion_front();
+                    break;
+                case 2:
+                    insertionbefore_pos();
+
+                    break;
+                case 3:
+                    insertionafter_pos();
+                    break;
+                case 4:
+                    insertionbefore_value();
+                    break;
+                case 5:
+                    insertionafter_value();
+                    break;
+                case 6:
+                    insertion_end();
+                    break;
+                default:
+                    printf("\n INVALID CHOICE\n");
+                    break;
+                }
+                printf("\ndo you want to continue :\n\t\t\t1.YES\n\t\t\t2.BACK TO MAIN MENU\nselect any one ");
+                scanf("%d", &back);
+            } while (back == 1);
+
+            break;
+        case 2:
+
+            do
+            {
+                printf("\n different types of deletion opertions are:");
+                printf("\n\t\t\t1.DELETION AT FRONT\n\t\t\t2.DELETION AT END\n\t\t\t3.DELETION AT SPECIFIC POSITION\n\t\t\t4.DELETION AT SPECIFIC VALUE \n");
+                printf("\n select any deletion operation:");
+                scanf("%d", &ch);
+                switch (ch)
+                {
+                case 1:
+                    delete_front();
+                    break;
+                case 2:
+                    deletion_last();
+                    break;
+                case 3:
+                    deletion_pos();
+                    break;
+                case 4:
+                    deletion_key();
+                    break;
+                default:
+                    printf("\n INVALID CHOICE\n");
+                    break;
+                }
+                printf("\ndo you want to continue :\n\t\t\t1.YES\n\t\t\t2.BACK TO MAIN MENU\nselect any one ");
+                scanf("%d", &back);
+            } while (back == 1);
+
+            break;
+
+        case 3:
+            // count
+            if (count != 0)
+            {
+                printf("\nyou are stored %d values in this linked list\n", count);
+            }
+            else
+            {
+                printf("\nno data stored ie, linked list is empty\n");
+            }
+
+            break;
+        case 4:
+            // display
+            display();
+            break;
+        case 5:
+            printf("\nEXIT\n");
+            break;
+        default:
+            printf("\nInvalid choice\n");
+            break;
+        }
+    } while (choice != 5);
+}
